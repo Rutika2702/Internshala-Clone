@@ -10,9 +10,7 @@ import {
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-
-const index = () => {
- const jobdata = [
+ const filteredJobs = [
     {
       _id: "101",
       title: "Frontend Developer",
@@ -112,16 +110,18 @@ const index = () => {
       numberOfopning: "1",
     },
   ];
+
+const index = () => {
     const router = useRouter();
        const { id } = router.query;
-       const internshipData = jobdata.find((intern) => intern._id == id);
-       console.log(internshipData);
+       const jobdata = filteredJobs.find((job) => job._id === id);
+       console.log(jobdata);
         const [availability, setAvailability] = useState("");
        const [isModalOpen, setIsModalOpen] = useState(false);
        const [coverLetter, setCoverLetter] = useState("");
        //const user=useSelector(selectuser);
        const user=true;
-    if (!internshipData) {
+    if (!jobdata) {
       return (
         <div className="min-h-screen flex items-center justify-center">
           <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
@@ -140,7 +140,7 @@ const index = () => {
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
             {jobdata.title}
           </h1>
-          <p className="text-lg text-gray-600 mb-4">{internshipData.company}</p>
+          <p className="text-lg text-gray-600 mb-4">{jobdata.company}</p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="flex items-center space-x-2 text-gray-600">
               <MapPin className="h-5 w-5" />
@@ -148,24 +148,24 @@ const index = () => {
             </div>
             <div className="flex items-center space-x-2 text-gray-600">
               <DollarSign className="h-5 w-5" />
-              <span>{internshipData.CTC}</span>
+              <span>{jobdata.CTC}</span>
             </div>
             <div className="flex items-center space-x-2 text-gray-600">
               <Calendar className="h-5 w-5" />
-              <span>{internshipData.StartDate}</span>
+              <span>{jobdata.StartDate}</span>
             </div>
           </div>
           <div className="mt-4 flex items-center space-x-2">
             <Clock className="h-4 w-4 text-green-500" />
             <span className="text-green-500 text-sm">
-              Posted on {internshipData.StartDate}
+              Posted on{jobdata.StartDate}
             </span>
           </div>
         </div>
         {/* Company Section */}
         <div className="p-6 border-b">
           <h2 className="text-xl font-bold text-gray-900 mb-4">
-            About {internshipData.company}
+            About {jobdata.company}
           </h2>
           <div className="flex items-center space-x-2 mb-4">
             <a
@@ -176,32 +176,32 @@ const index = () => {
               <ExternalLink className="h-4 w-4" />
             </a>
           </div>
-          <p className="text-gray-600">{internshipData.aboutCompany}</p>
+          <p className="text-gray-600">{jobdata.aboutCompany}</p>
         </div>
         {/* Internship Details Section */}
         <div className="p-6 border-b">
           <h2 className="text-xl font-bold text-gray-900 mb-4">
             About the Internship
           </h2>
-          <p className="text-gray-600 mb-6">{internshipData.aboutCompany}</p>
+          <p className="text-gray-600 mb-6">{jobdata.aboutCompany}</p>
 
           <h3 className="text-lg font-semibold text-gray-900 mb-2">
             Who can apply
           </h3>
-          <p className="text-gray-600 mb-6">{internshipData.Whocanapply}</p>
+          <p className="text-gray-600 mb-6">{jobdata.Whocanapply}</p>
 
           <h3 className="text-lg font-semibold text-gray-900 mb-2">Perks</h3>
-          <p className="text-gray-600 mb-6">{internshipData.perks}</p>
+          <p className="text-gray-600 mb-6">{jobdata.perks}</p>
 
           <h3 className="text-lg font-semibold text-gray-900 mb-2">
             Additional Information
           </h3>
-          <p className="text-gray-600 mb-6">{internshipData.AdditionalInfo}</p>
+          <p className="text-gray-600 mb-6">{jobdata.AdditionalInfo}</p>
 
           <h3 className="text-lg font-semibold text-gray-900 mb-2">
             Number of Openings
           </h3>
-          <p className="text-gray-600">{internshipData.numberOfopning}</p>
+          <p className="text-gray-600">{jobdata.numberOfopning}</p>
         </div>
         {/* Apply Button */}
         <div className="p-6 flex justify-center">
@@ -221,14 +221,14 @@ const index = () => {
             <div className="p-6 border-b">
               <div className="flex justify-between items-center">
                 <h2 className="text-2xl font-bold text-gray-900">
-                  Apply to {internshipData.company}
+                  Apply to {jobdata.company}
                 </h2>
                 <button
                   onClick={() => setIsModalOpen(false)}
                   className="text-gray-400 hover:text-gray-600"
                 >
                   <X className="h-6 w-6" />
-                </button>
+                </button>0
               </div>
             </div>
             <div className="p-6 space-y-6">
@@ -304,3 +304,23 @@ const index = () => {
 };
 
 export default index;
+
+//=======================================================
+// // pages/detailjob/[id].tsx
+// import { useRouter } from 'next/router';
+
+// const JobDetail = () => {
+//   const router = useRouter();
+//   const { id } = router.query;
+
+//   if (!id) return <p>Loading...</p>;
+
+//   return (
+//     <div style={{ padding: "2rem" }}>
+//       <h1>Job Detail Page</h1>
+//       <p>Job ID: {id}</p>
+//     </div>
+//   );
+// };
+
+// export default JobDetail;
